@@ -2,14 +2,13 @@
   <div>
     <button
       @click="toggleAccordion()"
-      class="flex items-center space-x-3"
+      class="accordion"
       :aria-expanded="isOpen"
       :aria-controls="`collapse${_uid}`"
     >
       {{ title }}
 
       <svg
-        class="w-3 transition-all duration-200 transform"
         :class="{
           'rotate-180': isOpen,
           'rotate-0': !isOpen,
@@ -19,6 +18,8 @@
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 10"
         aria-hidden="true"
+        height="5px"
+        width="10px"
       >
         <path
           d="M15 1.2l-7 7-7-7"
@@ -30,7 +31,13 @@
     </button>
 
     <div v-show="isOpen" :id="`collapse${_uid}`">
-      {{ description }}
+      <form action="/action_page.php">
+        <template v-for="(option, index) in description" :key="index">
+          <input type="radio" :id="index" :name="index" :value="index" />
+          <label :for="index">{{ option }}</label
+          ><br />
+        </template>
+      </form>
     </div>
   </div>
 </template>
@@ -57,3 +64,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.accordion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px;
+}
+</style>
